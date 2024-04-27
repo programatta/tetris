@@ -1,5 +1,6 @@
 #include<raylib.h>
 #include "grid.hpp"
+#include "blocks.cpp"
 
 
 int main(){
@@ -9,7 +10,6 @@ int main(){
 
     //Color {red, green, blue, alpha}
     Color darkGreen = Color{20, 160, 133, 255};
-    //Color darkGray = {26, 31, 40, 255};
 
     //Creamos la pantalla.
     InitWindow(screenWidth, screenHeight, "TetrisRaylib");
@@ -19,6 +19,14 @@ int main(){
 
     Grid grid = Grid();
     grid.print();
+
+    // LBlock block = LBlock();
+    // JBlock block = JBlock();
+    // IBlock block = IBlock();
+    // OBlock block = OBlock();
+    // SBlock block = SBlock();
+    // TBlock block = TBlock();
+    ZBlock block = ZBlock();
 
     //Game loop.
     while(!WindowShouldClose()){
@@ -30,6 +38,7 @@ int main(){
         BeginDrawing();
         ClearBackground(darkGreen);
         grid.draw();
+        block.draw();
         EndDrawing();
     }
 

@@ -1,6 +1,6 @@
-#include "grid.hpp"
 #include <iostream>
-
+#include "grid.hpp"
+#include "colors.hpp"
 
 Grid::Grid(){
     this->numRows = 20;
@@ -8,7 +8,7 @@ Grid::Grid(){
     this->cellSize = 30;
 
     this->initialize();
-    this->colors = this->getCellColors();
+    this->colors = getCellColors();
 }
 
 
@@ -53,22 +53,3 @@ void Grid::draw(){
 /*===========================================================================*/
 /*                           Private Section                                 */
 /*===========================================================================*/
-
-/**
- * Devuelve la lista de colores que se van a usar en las celdas para pintar los
- * bloques.
- * 
- * return std::vector<Color>
-*/
-std::vector<Color> Grid::getCellColors(){
-    Color darkGray = {26, 31, 40, 255}; //Color de fondo
-    Color green = {47, 210, 32, 255};   //Pieza 1
-    Color red = {232, 18, 18, 255};     //Pieza 2
-    Color orange = {226, 116, 17, 255}; //Pieza 3
-    Color yellow = {237, 234, 6, 255};  //Pieza 4
-    Color purple = {166, 0, 247, 255};  //Pieza 5
-    Color cyan = {21, 204, 209, 255};   //Pieza 6
-    Color blue = {13, 64, 216, 255};    //Pieza 7
-
-    return {darkGray, green, red, orange, yellow, purple, cyan, blue};
-}
