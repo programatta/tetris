@@ -1,0 +1,18 @@
+version: '3'
+services:
+  development_env:
+    #container_name: development-env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=$DISPLAY
+    command: sleep infinity
+    image: development-env
+    user: jorge
+    volumes:
+      - .:/code
+      - ./docker/.vscode-server:/home/jorge/.vscode-server
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    # ports:
+    #   - "1:0"
