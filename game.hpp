@@ -23,5 +23,6 @@ class Game {
         void moveBlockLeft();
         void moveBlockRight();
         void moveBlockDown();
+        void rotateBlock();
         bool isBlockOutside();
 };

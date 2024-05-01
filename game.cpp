@@ -39,14 +39,23 @@ void Game::handleInput(){
         case KEY_DOWN:
             this->moveBlockDown();
             break;
+        case KEY_UP:
+            this->rotateBlock();
     }
 }
 
 void Game::update(){
     if(this->isBlockOutside()){
-        //deshacemos el movimiento.
-        this->currentBlock.move(this->nextX*-1, this->nextY*-1);
+        if(this->nextX!=0 || this->nextY!=0){
+            //deshacemos el movimiento.
+            this->currentBlock.move(this->nextX*-1, this->nextY*-1);
+        }else{
+            this->currentBlock.undoRotate();
+        }
     }
+
+    this->nextX = 0;
+    this->nextY = 0;
 }
 
 void Game::draw(){
@@ -76,6 +85,10 @@ void Game::moveBlockDown(){
     this->nextX = 1;
     this->nextY = 0;
     this->currentBlock.move(1, 0);
+}
+
+void Game::rotateBlock(){
+    this->currentBlock.rotate();
 }
 
 bool Game::isBlockOutside(){

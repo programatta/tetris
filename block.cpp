@@ -44,3 +44,11 @@ std::vector<Position> Block::getCellPositions(){
 
     return movedTitles;
 }
+
+void Block::rotate(){
+  this->rotationState = (this->rotationState + 1) % 4;  
+}
+
+void Block::undoRotate(){
+    this->rotationState = this->rotationState == 0 ? this->cells.size()-1 : this->rotationState-1;
+}
