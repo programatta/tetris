@@ -10,6 +10,7 @@ class Grid {
         void initialize();
         void print();
         void draw();
+        bool isCellOutside(int row, int column);
 
     private:
         int numRows;

@@ -1,7 +1,5 @@
 #include<raylib.h>
-#include "grid.hpp"
-#include "blocks.cpp"
-
+#include "game.hpp"
 
 int main(){
     const int FPS = 60;
@@ -17,28 +15,20 @@ int main(){
     //Establecemos el framerate.
     SetTargetFPS(FPS);
 
-    Grid grid = Grid();
-    grid.print();
-
-    // LBlock block = LBlock();
-    // JBlock block = JBlock();
-    // IBlock block = IBlock();
-    // OBlock block = OBlock();
-    // SBlock block = SBlock();
-    // TBlock block = TBlock();
-    ZBlock block = ZBlock();
+    Game game = Game();
 
     //Game loop.
     while(!WindowShouldClose()){
         //Eventos.
+        game.handleInput();
 
         //Actualziaciones.
+        game.update();
         
         //Dibujo.
         BeginDrawing();
         ClearBackground(darkGreen);
-        grid.draw();
-        block.draw();
+        game.draw();
         EndDrawing();
     }
 

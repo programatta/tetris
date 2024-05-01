@@ -50,6 +50,20 @@ void Grid::draw(){
     }
 }
 
+/**
+ * Verifica si una celda está fuera de la regilla.
+ * 
+ * Params:
+ *  - row: int
+ *  - column: int
+ * 
+ * Return: true | false
+*/
+bool Grid::isCellOutside(int row, int column){
+    bool isOutside = row<0 || row > this->numRows-1 || column <0 || column > this->numCols-1;
+    return isOutside;
+}
+
 /*===========================================================================*/
 /*                           Private Section                                 */
 /*===========================================================================*/

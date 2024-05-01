@@ -29,6 +29,7 @@ class LBlock:public Block {
                 Position(1,1),
                 Position(2,1)
             };
+            this->move(0, 3);
         }
 };
 
@@ -61,6 +62,7 @@ class JBlock:public Block {
                 Position(2,0),
                 Position(2,1)
             };
+            this->move(0, 3);
         }
 };
 
@@ -92,6 +94,7 @@ class IBlock:public Block {
                 Position(2,1),
                 Position(3,1)
             };
+            this->move(-1, 3);
         }
 };
 
@@ -108,6 +111,7 @@ class OBlock:public Block {
             this->cells[1] = this->cells[0];
             this->cells[2] = this->cells[0];
             this->cells[3] = this->cells[0];
+            this->move(0, 4);
         }
 };
 
@@ -139,6 +143,7 @@ class SBlock:public Block {
                 Position(1,1),
                 Position(2,1)
             };
+            this->move(0, 3);
         }
 };
 
@@ -170,6 +175,7 @@ class TBlock:public Block {
                 Position(1,1),
                 Position(2,1)
             };
+            this->move(0, 3);
         }
 };
 
@@ -201,5 +207,6 @@ class ZBlock:public Block {
                 Position(1,1),
                 Position(2,0)
             };
+            this->move(0, 3);
         }
 };
