@@ -20,9 +20,15 @@ class Game {
         Block currentBlock;
         Block nextBlock;
         int nextX, nextY;
+        double lastUpdate;
+        double sleepFallTime;
+        bool isUserInput;
         void moveBlockLeft();
         void moveBlockRight();
         void moveBlockDown();
+        void moveBlockFastDown();
         void rotateBlock();
         bool isBlockOutside();
+        void lockBlock();
+        bool isBlockCollide();
 };

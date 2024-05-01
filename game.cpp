@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include <random>
+#include <iostream>
 #include "blocks.cpp"
 
 
@@ -8,6 +9,8 @@ Game::Game(){
     this->blocks = this->getAllBlocks();
     this->currentBlock = this->getRandomBlock();
     this->nextBlock = this->getRandomBlock();
+    this->lastUpdate = 0;
+    this->sleepFallTime = 0.200;
 }
 
 Block Game::getRandomBlock(){
@@ -38,24 +41,56 @@ void Game::handleInput(){
             break;
         case KEY_DOWN:
             this->moveBlockDown();
+            this->isUserInput = true;
+            break;
+        case KEY_SPACE:
+            this->moveBlockFastDown();
             break;
         case KEY_UP:
             this->rotateBlock();
+            break;
+        default:
+            this->isUserInput = false;
     }
 }
 
 void Game::update(){
+    double currentTime = GetTime();
+    if(currentTime-this->lastUpdate > this->sleepFallTime){
+        if(!this->isUserInput){
+            this->moveBlockDown();
+        }
+        this->lastUpdate = currentTime;
+    }
+    
     if(this->isBlockOutside()){
         if(this->nextX!=0 || this->nextY!=0){
             //deshacemos el movimiento.
-            this->currentBlock.move(this->nextX*-1, this->nextY*-1);
+            std::cout << "A1" << "\n";
+            this->currentBlock.move(this->nextY*-1, this->nextX*-1);
+
+            //Si es hacia abajo hemos llegado al final.
+            if(this->nextX==0 && this->nextY==1){
+                this->lockBlock();
+                this->currentBlock = this->nextBlock;
+                this->nextBlock = this->getRandomBlock();
+                this->sleepFallTime = 0.200;
+            }
         }else{
             this->currentBlock.undoRotate();
         }
+    }else{
+        if(this->isBlockCollide()){
+            std::cout << "C1" << "\n";
+            this->currentBlock.move(this->nextY*-1, this->nextX*-1);
+            if(this->nextX==0 && this->nextY==1){
+                this->lockBlock();
+                this->currentBlock = this->nextBlock;
+                this->nextBlock = this->getRandomBlock();
+                this->sleepFallTime = 0.200;
+            }
+        }
     }
-
-    this->nextX = 0;
-    this->nextY = 0;
 }
 
 void Game::draw(){
@@ -70,25 +105,37 @@ void Game::draw(){
 /*                           Private Section                                 */
 /*===========================================================================*/
 void Game::moveBlockLeft(){
-    this->nextX = 0;
-    this->nextY = -1;
+    this->nextX = -1;
+    this->nextY = 0;
     this->currentBlock.move(0,-1);
+    this->isUserInput = true;
 }
 
 void Game::moveBlockRight(){
-    this->nextX = 0;
-    this->nextY = 1;
+    this->nextX = 1;
+    this->nextY = 0;
     this->currentBlock.move(0,1);
+    this->isUserInput = true;
 }
 
 void Game::moveBlockDown(){
-    this->nextX = 1;
-    this->nextY = 0;
+    this->nextX = 0;
+    this->nextY = 1;
     this->currentBlock.move(1, 0);
 }
 
+void Game::moveBlockFastDown(){
+    this->nextX = 0;
+    this->nextY = 1;
+    this->sleepFallTime = 0;
+    this->isUserInput = true;
+}
+
 void Game::rotateBlock(){
+    this->nextX = 0;
+    this->nextY = 0;
     this->currentBlock.rotate();
+    this->isUserInput = true;
 }
 
 bool Game::isBlockOutside(){
@@ -101,4 +148,23 @@ bool Game::isBlockOutside(){
         }
     }
     return isOutside;
+}
+
+void Game::lockBlock(){
+    std::vector<Position> tiles = this->currentBlock.getCellPositions();
+    for(Position item:tiles){
+        this->grid.grid[item.row][item.column] = this->currentBlock.id;
+    }
+}
+
+bool Game::isBlockCollide(){
+    bool isCollide = false;
+    std::vector<Position> tiles = this->currentBlock.getCellPositions();
+    for(Position item:tiles){
+        if(!this->grid.isCellEmpty(item.row, item.column)){
+            isCollide = true;
+            break;
+        }
+    }
+    return isCollide;
 }
