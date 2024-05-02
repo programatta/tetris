@@ -76,6 +76,9 @@ void Game::update(){
                 this->currentBlock = this->nextBlock;
                 this->nextBlock = this->getRandomBlock();
                 this->sleepFallTime = 0.200;
+
+                //Verificar filas llenas.
+                this->moveRowsDown();
             }
         }else{
             this->currentBlock.undoRotate();
@@ -157,4 +160,8 @@ bool Game::isBlockCollide(){
         }
     }
     return isCollide;
+}
+
+void Game::moveRowsDown(){
+    this->grid.moveRowsDown();
 }

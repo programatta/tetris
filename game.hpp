@@ -31,4 +31,5 @@ class Game {
         bool isBlockOutside();
         void lockBlock();
         bool isBlockCollide();
+        void moveRowsDown();
 };

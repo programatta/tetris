@@ -64,11 +64,42 @@ bool Grid::isCellOutside(int row, int column){
     return isOutside;
 }
 
-
 bool Grid::isCellEmpty(int row, int column){
     return this->grid[row][column] == 0;
 }
 
+void Grid::moveRowsDown(){
+    int firstRowComplete = 0;
+    int completed = 0;
+    for(int row=this->numRows-1; row>=0; row--){
+        if(this->isRowComplete(row)){
+            if(firstRowComplete == 0){
+                firstRowComplete = row;
+            }
+            completed++;
+        }
+    }
+
+    for(int i=0; i<completed; i++){
+        for(int row=firstRowComplete; row>0; row--){
+            for(int col=0; col<this->numCols; col++){
+                this->grid[row][col] = this->grid[row-1][col];
+            }
+        }
+    }
+}
+
+
 /*===========================================================================*/
 /*                           Private Section                                 */
 /*===========================================================================*/
+bool Grid::isRowComplete(int row){
+    bool complete = true;
+    for(int i=0; i<this->numCols; i++){
+        if(this->grid[row][i] == 0){
+            complete = false;
+            break;
+        }
+    }
+    return complete;
+}
