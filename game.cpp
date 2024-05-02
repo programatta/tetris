@@ -56,17 +56,18 @@ void Game::handleInput(){
 
 void Game::update(){
     double currentTime = GetTime();
-    if(currentTime-this->lastUpdate > this->sleepFallTime){
-        if(!this->isUserInput){
+    if(this->isUserInput){
+        this->lastUpdate = 0;
+    }else{
+        if(currentTime-this->lastUpdate > this->sleepFallTime){
             this->moveBlockDown();
+            this->lastUpdate = currentTime;
         }
-        this->lastUpdate = currentTime;
     }
-    
-    if(this->isBlockOutside()){
+
+    if(this->isBlockOutside() || this->isBlockCollide()){
         if(this->nextX!=0 || this->nextY!=0){
             //deshacemos el movimiento.
-            std::cout << "A1" << "\n";
             this->currentBlock.move(this->nextY*-1, this->nextX*-1);
 
             //Si es hacia abajo hemos llegado al final.
@@ -78,17 +79,6 @@ void Game::update(){
             }
         }else{
             this->currentBlock.undoRotate();
-        }
-    }else{
-        if(this->isBlockCollide()){
-            std::cout << "C1" << "\n";
-            this->currentBlock.move(this->nextY*-1, this->nextX*-1);
-            if(this->nextX==0 && this->nextY==1){
-                this->lockBlock();
-                this->currentBlock = this->nextBlock;
-                this->nextBlock = this->getRandomBlock();
-                this->sleepFallTime = 0.200;
-            }
         }
     }
 }
