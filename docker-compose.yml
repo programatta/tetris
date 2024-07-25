@@ -1,4 +1,3 @@
-version: '3'
 services:
   development_env:
     #container_name: development-env
