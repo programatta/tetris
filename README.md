@@ -75,9 +75,19 @@ Vemos que tenemos:
 xhost
 ~~~
 
+Nos puede salir algo como esto:
+~~~
+access control enabled, only authorized clients can connect
+~~~
+
 Añadidermos a docker a usar las X11:
 ~~~
 xhost +local:docker
+~~~
+
+Y nos aparece:
+~~~
+non-network local connections being added to access control list
 ~~~
 
 Verificamos que aparece __LOCAL:__
@@ -97,7 +107,20 @@ Al finalizar, podemos volver a quitar a docker de las X11:
 xhost -local:docker
 ~~~
 
+Y nos aparece:
+~~~
+non-network local connections being removed from access control list
+~~~
+
+
 Y comprobamos:
 ~~~
 xhost
 ~~~
+
+Y nos aparece:
+~~~
+access control enabled, only authorized clients can connect
+~~~
+
+Y lo hemos dejado como al inicio.
